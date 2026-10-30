@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>#4471 · three problems under one ticket · support kb</title>
+<title>#4471 · two problems under one ticket · support kb</title>
 <style>:root{--bg:#fbfaf7;--fg:#1d1d1b;--muted:#6b6a66;--line:#e3e0d8;--accent:#2f6f5e;--warn:#b4501f;--warn-bg:#fbeee6;--note-bg:#eef5f2;--mono:ui-monospace,'Cascadia Code',Menlo,monospace}
 @media (prefers-color-scheme:dark){:root{--bg:#171716;--fg:#ecebe6;--muted:#9c9a93;--line:#34332f;--accent:#6fbfa6;--warn:#f0905d;--warn-bg:#3a2418;--note-bg:#1d2c27}}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,sans-serif}
@@ -18,26 +18,26 @@ aside{border-left:4px solid var(--accent);padding:.5rem 1rem;margin:1rem 0;backg
 aside.warn{border-color:var(--warn);background:var(--warn-bg)}
 .stamp{margin:2rem 0 0;font:.85rem var(--mono);color:var(--muted)}.stamp b{color:var(--accent);letter-spacing:.04em}
 </style></head><body>
-<div class="kb"><header><a class="crumb" href="/kb">support desk · kb</a><h1>#4471 · three problems under one ticket</h1>
+<div class="kb"><header><a class="crumb" href="/kb">support desk · kb</a><h1>#4471 · two problems under one ticket</h1>
 <p class="meta"><span>owner <b>John Doe</b></span><span class="status proposed">proposed</span><span>reviewed 2026-10-30 · 0 days ago</span></p></header>
 <main>
-<p><a href="/kb/incidents/4471">#4471</a> was merged as one issue: "dates parse month first". The reports under it describe three different problems. The queued fix covers one of them.</p>
-<aside class="warn">Not one issue. When the parser fix ships, #4471 will close and the other problems will still have reports and no ticket.</aside>
+<p><a href="/kb/incidents/4471">#4471</a> was merged as one issue: "dates parse month first". The reports under it describe two different problems. The queued fix covers one of them.</p>
+<aside class="warn">Not one issue. When the parser fix ships, #4471 will close and the other problem will still have reports and no ticket.</aside>
 <h2>What the reports show</h2>
-<p class="sum"><strong>412</strong> reports merged into #4471 · <strong>3</strong> problems.
+<p class="sum"><strong>412</strong> reports merged into #4471 · <strong>2</strong> problems.
   <span class="muted">The export has 427 rows; 15 are repeats of an id and are counted once.</span></p>
 <table><thead><tr><th>problem</th><th>reports</th><th>tagged as</th><th>tagged wrong</th><th>tenants</th><th>seen</th><th>ticket</th></tr></thead><tbody>
-<tr><td><code>parser</code></td><td>374</td><td class="muted">parser ×351 · hint ×23</td><td>23</td><td>11</td><td>2026-04-01 → 2026-10-04</td><td><a href="https://github.com/jvermirovsky/mega_dev_test/issues/1">ticket</a></td></tr>
+<tr><td><code>parser</code></td><td>379</td><td class="muted">parser ×356 · hint ×23</td><td>23</td><td>11</td><td>2026-04-01 → 2026-10-04</td><td><a href="https://github.com/jvermirovsky/mega_dev_test/issues/1">ticket</a></td></tr>
 <tr><td><code>hint</code></td><td>33</td><td class="muted">hint ×18 · parser ×15</td><td>15</td><td>3</td><td>2026-04-17 → 2026-09-22</td><td><a href="https://github.com/jvermirovsky/mega_dev_test/issues/2">ticket</a></td></tr>
-<tr><td><code>one-day</code></td><td>5</td><td class="muted">parser ×5</td><td>–</td><td>5</td><td>2026-04-02 → 2026-10-04</td><td><a href="https://github.com/jvermirovsky/mega_dev_test/issues/3">ticket</a></td></tr>
 </tbody></table>
-<p>Counts come from the reports and the tenant directory at render time. A report belongs to a problem by its tenant (locale and booking form), never by its subject line or its intake tag.</p>
-<h2>The three problems</h2>
+<p class="muted">5 reports read as a one-day move; filed under <code>parser</code> by tenant.</p>
+<p>Counts come from the reports and the tenant directory at render time. A report belongs to a problem by its tenant (locale and booking form), never by its subject line, its intake tag or how the reporter describes it.</p>
+<h2>The two problems</h2>
 <p><strong><code>parser</code>: the shared parser reads dates month first.</strong> A day-first tenant's dates come out with day and month swapped. This is the bug #4471 describes. Reports come in by app, email and form.</p>
 <p><strong><code>hint</code>: the booking form teaches the wrong order.</strong> Booking-v3 prints <code>MM/DD/YYYY</code> under the date field, so people at a day-first tenant type the month first, and the form reads it their way. Only form reports from booking-v3 tenants belong here. Fixing the parser does not touch this: the fix is the hint text or the form.</p>
-<p><strong><code>one-day</code>: a date is off by one day, not by a month.</strong> The desk already read these reports as a one-day move (<code>desk-notes.json</code>). Nothing in them shows a day and month swap. A time zone or day-boundary cause is likely but not confirmed. They need an engineer to look; they must not be counted as parser reports.</p>
+<p>A few reports describe a date that is one day off instead of a month flip. The desk filed them by tenant, under <code>parser</code>, and footnotes them. They are counted once, in that row.</p>
 <h2>Why the merge hid this</h2>
-<ul><li><a href="/kb/decisions/0001-dedupe-by-subject">Decision 0001</a> merges on the subject line. The same subjects ("Wrong day on the invite", "Appointment moved by itself") come in for all three problems.</li><li>Intake tags a report from the reporter's browser, before anyone looks at the tenant. The "tagged wrong" column shows how often that guess names the other problem.</li><li>The ticket export comes in pages that overlap, so the same report can arrive twice. One id is one report.</li></ul>
+<ul><li><a href="/kb/decisions/0001-dedupe-by-subject">Decision 0001</a> merges on the subject line. The same subjects ("Wrong day on the invite", "Appointment moved by itself") come in for both problems.</li><li>Intake tags a report from the reporter's browser, before anyone looks at the tenant. The "tagged wrong" column shows how often that guess names the other problem.</li><li>The ticket export comes in pages that overlap, so the same report can arrive twice. One id is one report.</li></ul>
 <h2>What to do</h2>
 <ul><li>Keep one ticket per problem, each with the count shown above.</li><li>Decide a new matching rule: group by cause (tenant locale and booking form), not by subject. Write it as a new decision record that replaces 0001. Do not edit 0001.</li><li>Count reports by id before you quote a number.</li></ul>
 <p class="stamp"><!-- signature: John Doe · S01E03 -->desk ref <b>DR-S5HV-A2WF</b></p>

@@ -1,6 +1,6 @@
 ---
 layout: runbook
-title: '#4471 · three problems under one ticket'
+title: '#4471 · two problems under one ticket'
 owner: John Doe
 status: proposed
 reviewed: 2026-10-30
@@ -13,14 +13,14 @@ signature: 'John Doe · S01E03'
   import RenderStamp from '#lib/kb/RenderStamp.svelte';
 
   const repo = 'https://github.com/jvermirovsky/mega_dev_test/issues';
-  const issues = { parser: `${repo}/1`, hint: `${repo}/2`, 'one-day': `${repo}/3` };
+  const issues = { parser: `${repo}/1`, hint: `${repo}/2` };
 </script>
 
 [#4471](/kb/incidents/4471) was merged as one issue: "dates parse month first". The reports under it
-describe three different problems. The queued fix covers one of them.
+describe two different problems. The queued fix covers one of them.
 
 <Callout kind="warn">
-Not one issue. When the parser fix ships, #4471 will close and the other problems will still have
+Not one issue. When the parser fix ships, #4471 will close and the other problem will still have
 reports and no ticket.
 </Callout>
 
@@ -29,9 +29,10 @@ reports and no ticket.
 <ProblemTable ticket={4471} {issues} />
 
 Counts come from the reports and the tenant directory at render time. A report belongs to a problem
-by its tenant (locale and booking form), never by its subject line or its intake tag.
+by its tenant (locale and booking form), never by its subject line, its intake tag or how the reporter
+describes it.
 
-## The three problems
+## The two problems
 
 **`parser`: the shared parser reads dates month first.** A day-first tenant's dates come out with day
 and month swapped. This is the bug #4471 describes. Reports come in by app, email and form.
@@ -41,15 +42,13 @@ field, so people at a day-first tenant type the month first, and the form reads 
 form reports from booking-v3 tenants belong here. Fixing the parser does not touch this: the fix is
 the hint text or the form.
 
-**`one-day`: a date is off by one day, not by a month.** The desk already read these reports as a one-day
-move (`desk-notes.json`). Nothing in them shows a day and month swap. A time zone or day-boundary
-cause is likely but not confirmed. They need an engineer to look; they must not be counted as parser
-reports.
+A few reports describe a date that is one day off instead of a month flip. The desk filed them by
+tenant, under `parser`, and footnotes them. They are counted once, in that row.
 
 ## Why the merge hid this
 
 - [Decision 0001](/kb/decisions/0001-dedupe-by-subject) merges on the subject line. The same subjects
-  ("Wrong day on the invite", "Appointment moved by itself") come in for all three problems.
+  ("Wrong day on the invite", "Appointment moved by itself") come in for both problems.
 - Intake tags a report from the reporter's browser, before anyone looks at the tenant. The "tagged
   wrong" column shows how often that guess names the other problem.
 - The ticket export comes in pages that overlap, so the same report can arrive twice. One id is one

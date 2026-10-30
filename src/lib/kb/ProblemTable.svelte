@@ -32,7 +32,7 @@
         <td><code>{g.problem}</code></td>
         <td>{g.reports.length}</td>
         <td class="muted">{tags(g)}</td>
-        <td>{g.problem === 'one-day' ? '–' : misTagged(g)}</td>
+        <td>{misTagged(g)}</td>
         <td>{g.tenants}</td>
         <td>{g.firstSeen} → {g.lastSeen}</td>
         <td>{#if issues[g.problem]}<a href={issues[g.problem]}>ticket</a>{:else}not filed{/if}</td>
@@ -40,6 +40,12 @@
     {/each}
   </tbody>
 </table>
+
+{#each data.groups as g (g.problem)}
+  {#if g.readAsOneDay}
+    <p class="muted">{g.readAsOneDay} reports read as a one-day move; filed under <code>{g.problem}</code> by tenant.</p>
+  {/if}
+{/each}
 
 <style>
   .sum { font-size: 1.1rem; }

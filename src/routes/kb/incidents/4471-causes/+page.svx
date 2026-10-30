@@ -11,6 +11,9 @@ signature: 'John Doe · S01E03'
   import ProblemTable from '#lib/kb/ProblemTable.svelte';
   import Callout from '#lib/kb/Callout.svelte';
   import RenderStamp from '#lib/kb/RenderStamp.svelte';
+
+  const repo = 'https://github.com/jvermirovsky/mega_dev_test/issues';
+  const issues = { parser: `${repo}/1`, hint: `${repo}/2`, 'one-day': `${repo}/3` };
 </script>
 
 [#4471](/kb/incidents/4471) was merged as one issue: "dates parse month first". The reports under it
@@ -23,7 +26,7 @@ reports and no ticket.
 
 ## What the reports show
 
-<ProblemTable ticket={4471} />
+<ProblemTable ticket={4471} {issues} />
 
 Counts come from the reports and the tenant directory at render time. A report belongs to a problem
 by its tenant (locale and booking form), never by its subject line or its intake tag.

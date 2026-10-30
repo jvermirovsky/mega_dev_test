@@ -4,7 +4,7 @@
   import { groupByCause, readAs, ticketCause, uniqueById, type Report } from '#lib/kb/causes';
   import { tenantOf } from '#lib/kb/locales';
 
-  let { ticket }: { ticket: number } = $props();
+  let { ticket, issues = {} }: { ticket: number; issues?: Record<string, string> } = $props();
 
   const merged = $derived(uniqueById(reports as Report[]).filter((r) => r.mergedInto === ticket));
   const groups = $derived(groupByCause(merged, tenantOf));
@@ -34,7 +34,10 @@
         <td class="tags">{tags(g)}</td>
         <td>{g.tenants}</td>
         <td>{g.firstSeen} → {g.lastSeen}</td>
-        <td>{g.cause === owner ? `#${ticket}` : 'not this ticket — no ticket of its own'}</td>
+        <td>
+          {#if issues[g.cause]}<a href={issues[g.cause]}>own ticket</a>
+          {:else}{g.cause === owner ? `#${ticket}` : 'not this ticket — no ticket of its own'}{/if}
+        </td>
       </tr>
     {/each}
   </tbody>

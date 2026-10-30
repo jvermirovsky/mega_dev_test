@@ -1,0 +1,25 @@
+---
+layout: runbook
+title: '0002 · Duplicates share a cause'
+owner: John Doe
+status: proposed
+reviewed: 2026-10-30
+---
+
+**Date:** 30 October 2026 · **Deciders:** support desk · **Replaces:** [0001](/kb/decisions/0001-dedupe-by-subject)
+
+## Context
+
+[#4471](/kb/incidents/4471) merged every date report into one ticket because the subject lines
+matched. The reports had two causes, and the queued fix covers only one
+([the split](/kb/incidents/4471-causes)).
+
+## Decision
+
+Two reports are the same issue when they share a cause: the tenant's locale and booking form, read
+by `causes.ts`. The subject line and the intake tag do not decide it. Count each report id once.
+
+## Consequences
+
+- One ticket per cause, each with its own count and fix.
+- Triage needs the tenant directory, not only the subject. `DedupeExplorer` already shows the rule.

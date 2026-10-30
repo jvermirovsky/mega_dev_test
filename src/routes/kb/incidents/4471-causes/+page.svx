@@ -1,0 +1,62 @@
+---
+layout: runbook
+title: '#4471 · three problems under one ticket'
+owner: John Doe
+status: proposed
+reviewed: 2026-10-30
+signature: 'John Doe · S01E03'
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+[#4471](/kb/incidents/4471) was merged as one issue: "dates parse month first". The reports under it
+describe three different problems. The queued fix covers one of them.
+
+<Callout kind="warn">
+Not one issue. When the parser fix ships, #4471 will close and the other problems will still have
+reports and no ticket.
+</Callout>
+
+## What the reports show
+
+<ProblemTable ticket={4471} />
+
+Counts come from the reports and the tenant directory at render time. A report belongs to a problem
+by its tenant (locale and booking form), never by its subject line or its intake tag.
+
+## The three problems
+
+**`parser`: the shared parser reads dates month first.** A day-first tenant's dates come out with day
+and month swapped. This is the bug #4471 describes. Reports come in by app, email and form.
+
+**`hint`: the booking form teaches the wrong order.** Booking-v3 prints `MM/DD/YYYY` under the date
+field, so people at a day-first tenant type the month first, and the form reads it their way. Only
+form reports from booking-v3 tenants belong here. Fixing the parser does not touch this: the fix is
+the hint text or the form.
+
+**`one-day`: a date is off by one day, not by a month.** The desk already read these reports as a one-day
+move (`desk-notes.json`). Nothing in them shows a day and month swap. A time zone or day-boundary
+cause is likely but not confirmed. They need an engineer to look; they must not be counted as parser
+reports.
+
+## Why the merge hid this
+
+- [Decision 0001](/kb/decisions/0001-dedupe-by-subject) merges on the subject line. The same subjects
+  ("Wrong day on the invite", "Appointment moved by itself") come in for all three problems.
+- Intake tags a report from the reporter's browser, before anyone looks at the tenant. The "tagged
+  wrong" column shows how often that guess names the other problem.
+- The ticket export comes in pages that overlap, so the same report can arrive twice. One id is one
+  report.
+
+## What to do
+
+- Keep one ticket per problem, each with the count shown above.
+- Decide a new matching rule: group by cause (tenant locale and booking form), not by subject. Write
+  it as a new decision record that replaces 0001. Do not edit 0001.
+- Count reports by id before you quote a number.
+
+<RenderStamp {signature} />

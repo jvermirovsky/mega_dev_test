@@ -2,7 +2,7 @@
 layout: runbook
 title: '#4471 · two problems under one ticket'
 owner: John Doe
-status: proposed
+status: accepted
 reviewed: 2026-10-30
 signature: 'John Doe · S01E03'
 ---
